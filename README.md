@@ -38,6 +38,7 @@ npm install --global nodemon
 3. Run Server
 
 ```
+cd jokes-app-test
 npm i
 nodemon index.js
 ```
@@ -49,3 +50,5 @@ cd jokes-client
 npm i
 npm start
 ```
+
+Browser should open automatically, or use the app from localhost:3000
