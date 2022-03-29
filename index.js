@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 
-// MODELS
+const jokeRouter = require("./router/jokes");
+const Joke = require("./models/joke.js");
 
-// MONGOOSE
 mongoose
   .connect('mongodb://127.0.0.1:27017/jokes_app', {
     useNewUrlParser: true,
@@ -14,11 +14,10 @@ mongoose
   .then(() => console.log("Mongo Connection Open!"))
   .catch((err) => console.log("Mongo Connection Error!!", err));
 
-// MIDDLEWARE
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cors());
-
+app.use("/", jokeRouter);
 
 app.get("/", (req, res) => {
   // if(req.session.viewCount) {
@@ -32,6 +31,13 @@ app.get("/", (req, res) => {
 app.listen(3050, () => {
   console.log("Listening on port 3050.");
 });
+
+
+
+
+
+
+
 
 
 
