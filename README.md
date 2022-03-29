@@ -20,3 +20,32 @@ You have 24 hours to complete the project as much as you can. You can choose to 
 1. Adding CRUD endpoints around the jokes
 2. A simple front-end portal any framework of your choice(preferable react) that utilise the API to manage the jokes
 3. Use a database instead of the CSV file
+
+## Running This app
+
+1. Clone Repo
+
+```
+git clone https://github.com/j-cort/jokes_app.git
+```
+
+2. Install nodemon globally (type command from anywhere)
+
+```
+npm install --global nodemon
+```
+
+3. Run Server
+
+```
+npm i
+nodemon index.js
+```
+
+4. Run Client
+
+```
+cd jokes-client 
+npm i
+npm start
+```
