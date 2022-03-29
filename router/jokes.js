@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joke = require("../models/joke");
 const handleAsyncErrors = require('../errorHandling/handleAsyncErrors')
+const { validateJoke } = require('../errorHandling/validations')
 
 // GET ALL JOKES
 router.get("/jokes", handleAsyncErrors(async (req, res) => {
@@ -27,9 +28,10 @@ router.get("/jokes-rand", handleAsyncErrors(async (req, res) => {
 // CREATE JOKE
 router.post("/jokes", handleAsyncErrors(async (req, res) => {
   const { content } = req.body;
+  validateJoke(content)
   const joke = new Joke({ content });
   const addedJoke = await joke.save();
-  res.json(newJoke);
+  res.json(addedJoke);
 }));
 
 // DELETE JOKE
