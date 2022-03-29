@@ -10,5 +10,4 @@ const JokeSchema = new Schema({
 
 const Joke = mongoose.model("Joke", JokeSchema);
 
-
 module.exports = Joke;

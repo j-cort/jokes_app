@@ -1,22 +1,53 @@
 const express = require("express");
 const router = express.Router();
 const Joke = require("../models/joke");
+const handleAsyncErrors = require('../errorHandling/handleAsyncErrors')
 
-// CREATE NEW USER
-router.post("/users", async (req, res) => {
-  const { name, email, username, password, location } = req.body.user;
-  const user = new User({ name, email, username });
-  await User.register(user, password);
-  const newUserPacket = {
-    success: true, 
-    username, 
-    location
-  }
-  res.json(newUserPacket);
-});
+// GET ALL JOKES
+router.get("/jokes", handleAsyncErrors(async (req, res) => {
+  const jokes = await Joke.find({})
+  res.json(jokes)
+}))
 
+// GET SPECIFIC JOKE
+router.get("/jokes/:id", handleAsyncErrors(async (req, res) => {
+  const { id } = req.params;
+  const joke = await Joke.findById(id)
+  res.json(joke)
+}))
 
+// GET RANDOM JOKE
+router.get("/jokes-rand", handleAsyncErrors(async (req, res) => {
+  const count = await Joke.countDocuments()
+  const random = Math.floor(Math.random()*count)
+  const joke = await Joke.findOne().skip(random)
+  res.json(joke)
+}))
 
+// CREATE JOKE
+router.post("/jokes", handleAsyncErrors(async (req, res) => {
+  const { content } = req.body;
+  const joke = new Joke({ content });
+  const addedJoke = await joke.save();
+  res.json(newJoke);
+}));
 
+// DELETE JOKE
+router.delete('/jokes/:id', handleAsyncErrors(async (req, res) => {
+  const { id } = req.params;
+  const joke = await Joke.findByIdAndDelete(id, { new: true });
+  res.json(joke)
+}))
+
+// UPDATE JOKE
+router.put('/jokes/:id', handleAsyncErrors(async (req, res) => {
+  const { id } = req.params;
+  const joke = await Joke.findByIdAndUpdate(
+    id, 
+    { ...req.body },
+    { new: true }
+  );
+  res.json(joke)
+}))
 
 module.exports = router;
